@@ -1,0 +1,68 @@
+<div id="content">
+  <div class="container">
+    <p class="mat-display-3">STOCK SEARCH</p>
+
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-auto">
+        <div
+          style="
+            border-width: 2px;
+            border-radius: 25px;
+            border-style: solid;
+            border-color: rgb(100, 77, 247);
+          "
+        >
+          <!--width: 250px;-->
+          <input
+            class="pl-3 ml-3"
+            type="text"
+            placeholder="Enter stock name"
+            #ticker
+            [matAutocomplete]="auto"
+            (keyup)="generatesugg(ticker.value)"
+            style="border: none"
+          />
+          <!--padding-left: 15px; margin-left: 15px-->
+
+          <button
+            class="btn"
+            type="button"
+            (click)="gettickerdetails(ticker.value)"
+          >
+            <i class="fa fa-search"></i>
+          </button>
+
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option disabled *ngIf="IsWait">
+              <mat-spinner diameter="25"> </mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!IsWait">
+              <div id="mt">
+                <mat-option
+                  *ngFor="let option of options"
+                  [value]="option.ticker"
+                >
+                  <div id="mat">
+                    <span style="font-size: 0.95rem; color: black">{{
+                      option.ticker
+                    }}</span>
+                    <span style="font-size: 0.8rem">
+                      {{ " | " + option.name }}
+                    </span>
+                  </div>
+                </mat-option>
+              </div>
+            </ng-container>
+          </mat-autocomplete>
+        </div>
+        <!-- <div class="col"></div> -->
+      </div>
+      <div class="col"></div>
+    </div>
+
+    <div id="footer-container" class="text-center text-muted footer-copyright">
+      Powered by Tiingo. Developed by Keerthana S K
+    </div>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+# [START gae_quickstart_yaml]
+runtime: nodejs12
+handlers:
+  - url: /(.+\.js)
+    static_files: dist/my-app/\1
+    upload: dist/my-app/(.+\.js)
+    secure: always
+    redirect_http_response_code: 301
+
+  - url: /(.+\.css)
+    static_files: dist/my-app/\1
+    upload: dist/my-app/(.+\.css)
+    secure: always
+    redirect_http_response_code: 301
+
+  - url: /(.+\.png)
+    static_files: dist/my-app/\1
+    upload: dist/my-app/(.+\.png)
+    secure: always
+    redirect_http_response_code: 301
+
+  - url: /(.+\.jpg)
+    static_files: dist/my-app/\1
+    upload: dist/my-app/(.+\.jpg)
+    secure: always
+    redirect_http_response_code: 301
+
+  - url: /(.+\.gif)
+    static_files: dist/my-app/\1
+    upload: dist/my-app/(.+\.gif)
+    secure: always
+    redirect_http_response_code: 301
+
+  - url: /(.+\.svg)
+    static_files: dist/my-app/\1
+    upload: dist/my-app/(.+\.svg)
+    secure: always
+    redirect_http_response_code: 301
+
+  - url: /favicon.ico
+    static_files: dist/my-app/favicon.ico
+    upload: dist/my-app/favicon.ico
+    secure: always
+    redirect_http_response_code: 301
+
+  - url: /(.+\.json)
+    static_files: dist/my-app/\1
+    upload: dist/my-app/(.+\.json)
+    secure: always
+    redirect_http_response_code: 301
+
+  - url: /(.+)
+    static_files: dist/my-app/index.html
+    upload: dist/my-app/index.html
+    secure: always
+    redirect_http_response_code: 301
+
+  - url: /
+    static_files: dist/my-app/index.html
+    upload: dist/my-app/index.html
+    secure: always
+    redirect_http_response_code: 301
+# - url: /
+#   static_files: dist/my-app/index.html
+#   upload: dist/my-app/index.html
+# - url: /
+#   static_dir: dist/my-app/
+
+# [END gae_quickstart_yaml]

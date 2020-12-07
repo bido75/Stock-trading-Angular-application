@@ -1,0 +1,11 @@
+ngb-alert {
+  position: static;
+
+  border-radius: 5px;
+}
+
+:focus,
+:active {
+  outline: 0 !important;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+}

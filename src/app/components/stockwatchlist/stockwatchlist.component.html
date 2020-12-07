@@ -1,0 +1,117 @@
+<div id="content">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 style="color: black">My Watchlist</h1>
+        <ngb-alert
+          class="text-center"
+          *ngIf="!watchlistitems.length"
+          type="warning"
+          dismissible
+        >
+          Currently you don't have any stock in your watchlist.
+        </ngb-alert>
+      </div>
+    </div>
+    <div *ngIf="IsWait && watchlistitems.length">
+      <mat-progress-spinner mode="indeterminate" style="margin: 120px auto">
+      </mat-progress-spinner>
+    </div>
+    <div *ngIf="!IsWait && watchlistitems.length">
+      <div class="row mt-3" *ngFor="let item of watchlistitems">
+        <div class="col">
+          <div class="card">
+            <a (click)="redirecttodetails(item.ticker)">
+              <div class="card-body">
+                <div style="display: flex; justify-content: flex-end">
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    style="padding: 0; margin: 0"
+                    (click)="removewatchlistitem(item)"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="row">
+                  <div class="col mr-auto">
+                    <h1 class="card-title" style="color: black">
+                      {{ item.ticker }}
+                    </h1>
+                  </div>
+                  <h1
+                    *ngIf="isUp(item.change)"
+                    class="col text-right"
+                    style="color: green"
+                  >
+                    {{ item.currprice }}
+                  </h1>
+                  <h1
+                    *ngIf="isDown(item.change)"
+                    class="col text-right"
+                    style="color: red"
+                  >
+                    {{ item.currprice }}
+                  </h1>
+                  <h1 *ngIf="isSame(item.change)" class="col text-right">
+                    {{ item.currprice }}
+                  </h1>
+                </div>
+                <div class="row">
+                  <div class="col mr-auto">
+                    <h3 class="card-subtitle" style="color: black">
+                      {{ item.name }}
+                    </h3>
+                  </div>
+                  <h3
+                    *ngIf="isUp(item.change)"
+                    class="col text-right"
+                    style="color: green"
+                  >
+                    <svg
+                      width="1em"
+                      height="1em"
+                      viewBox="0 0 16 16"
+                      class="bi bi-caret-up-fill"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+                      /></svg
+                    >{{ item.change + " (" + item.changeper + "%)" }}
+                  </h3>
+                  <h3
+                    *ngIf="isDown(item.change)"
+                    class="col text-right"
+                    style="color: red"
+                  >
+                    <svg
+                      width="1em"
+                      height="1em"
+                      viewBox="0 0 16 16"
+                      class="bi bi-caret-down-fill"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+                      /></svg
+                    >{{ item.change + " (" + item.changeper + "%)" }}
+                  </h3>
+                  <h3 *ngIf="isSame(item.change)" class="col text-right">
+                    {{ item.change + " (" + item.changeper + "%)" }}
+                  </h3>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer-container" class="text-center text-muted footer-copyright">
+    Powered by Tiingo. Developed by Keerthana S K
+  </div>
+</div>

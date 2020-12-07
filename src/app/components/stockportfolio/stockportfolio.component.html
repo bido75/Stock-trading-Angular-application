@@ -1,0 +1,363 @@
+<div id="content">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 style="color: black">My Portfolio</h1>
+        <ngb-alert
+          class="text-center"
+          *ngIf="!portfolioitems.length"
+          type="warning"
+          dismissible
+        >
+          Currently you don't have any stock.
+        </ngb-alert>
+      </div>
+    </div>
+    <div *ngIf="IsWait && portfolioitems.length">
+      <mat-progress-spinner mode="indeterminate" style="margin: 120px auto">
+      </mat-progress-spinner>
+    </div>
+    <div *ngIf="!IsWait && portfolioitems.length">
+      <div class="row mt-3" *ngFor="let item of portfolioitems">
+        <div class="col">
+          <div class="card">
+            <a
+              class="card-header nounderline"
+              (click)="redirecttodetails(item.ticker)"
+              style="margin: 0; display: flex; flex-direction: row"
+            >
+              <h2 style="color: black; margin: 0">
+                {{ item.ticker }}
+              </h2>
+              <p
+                class="h6 text-muted"
+                style="margin-left: 5px; margin-top: 7px"
+              >
+                {{ item.name }}
+              </p>
+            </a>
+            <div class="card-body">
+              <div class="row" style="">
+                <div class="col-sm-6">
+                  <div class="row" style="">
+                    <div class="col mr-auto" style="font-size: 1.1rem">
+                      Quantity:
+                    </div>
+                    <div class="col text-right" style="font-size: 1.1rem">
+                      {{ item.quantity }}
+                    </div>
+                  </div>
+                  <div class="row" style="">
+                    <div class="col mr-auto" style="font-size: 1.1rem">
+                      Avg.Cost/Share:
+                    </div>
+                    <div class="col text-right" style="font-size: 1.1rem">
+                      {{ (item.totalcost / item.quantity).toFixed(2) }}
+                    </div>
+                  </div>
+                  <div class="row" style="">
+                    <div class="col mr-auto" style="font-size: 1.1rem">
+                      Total Cost:
+                    </div>
+                    <div class="col text-right" style="font-size: 1.1rem">
+                      {{ item.totalcost.toFixed(2) }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row" style="">
+                    <div class="col mr-auto" style="font-size: 1.1rem">
+                      Change:
+                    </div>
+                    <div
+                      *ngIf="
+                        isup(item.currprice, item.totalcost / item.quantity)
+                      "
+                      class="col text-right"
+                      style="color: green; font-size: 1.1rem"
+                    >
+                      <svg
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 16 16"
+                        class="bi bi-caret-up-fill"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+                        />
+                      </svg>
+                      {{
+                        (
+                          item.currprice.toFixed(2) -
+                          (item.totalcost / item.quantity).toFixed(2)
+                        ).toFixed(2)
+                      }}
+                    </div>
+                    <div
+                      *ngIf="
+                        isdown(item.currprice, item.totalcost / item.quantity)
+                      "
+                      class="col text-right"
+                      style="color: red; font-size: 1.1rem"
+                    >
+                      <svg
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 16 16"
+                        class="bi bi-caret-down-fill"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+                        /></svg
+                      >{{
+                        (
+                          item.currprice.toFixed(2) -
+                          (item.totalcost / item.quantity).toFixed(2)
+                        ).toFixed(2)
+                      }}
+                    </div>
+                    <div
+                      *ngIf="
+                        issame(item.currprice, item.totalcost / item.quantity)
+                      "
+                      class="col text-right"
+                      style="font-size: 1.1rem"
+                    >
+                      {{
+                        (
+                          item.currprice.toFixed(2) -
+                          (item.totalcost / item.quantity).toFixed(2)
+                        ).toFixed(0)
+                      }}
+                    </div>
+                  </div>
+                  <div class="row" style="">
+                    <div class="col mr-auto" style="font-size: 1.1rem">
+                      Current Price:
+                    </div>
+                    <div
+                      *ngIf="
+                        isdown(item.currprice, item.totalcost / item.quantity)
+                      "
+                      class="col text-right"
+                      style="color: red; font-size: 1.1rem"
+                    >
+                      {{ item.currprice.toFixed(2) }}
+                    </div>
+                    <div
+                      *ngIf="
+                        isup(item.currprice, item.totalcost / item.quantity)
+                      "
+                      class="col text-right"
+                      style="color: green; font-size: 1.1rem"
+                    >
+                      {{ item.currprice.toFixed(2) }}
+                    </div>
+                    <div
+                      *ngIf="
+                        issame(item.currprice, item.totalcost / item.quantity)
+                      "
+                      class="col text-right"
+                      style="font-size: 1.1rem"
+                    >
+                      {{ item.currprice.toFixed(2) }}
+                    </div>
+                  </div>
+                  <div class="row" style="">
+                    <div class="col mr-auto" style="font-size: 1.1rem">
+                      Market Value:
+                    </div>
+                    <div
+                      *ngIf="
+                        isdown(item.currprice, item.totalcost / item.quantity)
+                      "
+                      class="col text-right"
+                      style="color: red; font-size: 1.1rem"
+                    >
+                      {{ (item.quantity * item.currprice).toFixed(2) }}
+                    </div>
+                    <div
+                      *ngIf="
+                        isup(item.currprice, item.totalcost / item.quantity)
+                      "
+                      class="col text-right"
+                      style="color: green; font-size: 1.1rem"
+                    >
+                      {{ (item.quantity * item.currprice).toFixed(2) }}
+                    </div>
+                    <div
+                      *ngIf="
+                        issame(item.currprice, item.totalcost / item.quantity)
+                      "
+                      class="col text-right"
+                      style="font-size: 1.1rem"
+                    >
+                      {{ (item.quantity * item.currprice).toFixed(2) }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div style="display: flex; justify-content: flex-end">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="open(buymodal)"
+                >
+                  Buy
+                </button>
+                <ng-template #buymodal let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">
+                      {{ item.ticker }}
+                    </h4>
+                    <button
+                      type="button"
+                      class="close"
+                      aria-label="Close"
+                      (click)="modal.dismiss('Cross click')"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div>Current Price: {{ item.currprice }}</div>
+
+                    <div class="d-flex">
+                      <label
+                        for="quantity"
+                        style="margin-top: 13px; margin-right: 8px"
+                        >Quantity</label
+                      >
+                      <input
+                        type="number"
+                        #qnty
+                        id="quantity"
+                        name="quantity"
+                        placeholder="0"
+                        ngbAutofocus
+                        (keyup)="onqtyupdate($event)"
+                        style="width: 200px; margin-top: 5px"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="modal-footer"
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      justify-content: space-between;
+                    "
+                  >
+                    <div>
+                      Total: {{ (item.currprice * qnty.value).toFixed(2) }}
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        class="btn btn-success"
+                        [disabled]="onvalueupdate(qnty.value)"
+                        (click)="
+                          modal.close();
+                          onclickBuy(item.ticker, qnty.value, item.currprice)
+                        "
+                      >
+                        Buy
+                      </button>
+                    </div>
+                  </div>
+                </ng-template>
+
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  style="margin-left: 10px"
+                  (click)="open(sellmodal)"
+                >
+                  Sell
+                </button>
+                <ng-template #sellmodal let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">
+                      {{ item.ticker }}
+                    </h4>
+                    <button
+                      type="button"
+                      class="close"
+                      aria-label="Close"
+                      (click)="modal.dismiss('Cross click')"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div>Current Price: {{ item.currprice }}</div>
+
+                    <div class="d-flex">
+                      <label
+                        for="quantity"
+                        style="margin-top: 13px; margin-right: 8px"
+                        >Quantity</label
+                      >
+                      <input
+                        type="number"
+                        #qnty
+                        id="quantity"
+                        name="quantity"
+                        placeholder="0"
+                        ngbAutofocus
+                        (keyup)="onqtyupdateforSell($event, item.quantity)"
+                        style="width: 200px; margin-top: 5px"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="modal-footer"
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      justify-content: space-between;
+                    "
+                  >
+                    <div>
+                      Total: {{ (item.currprice * qnty.value).toFixed(2) }}
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        class="btn btn-success"
+                        [disabled]="
+                          onvalueupdateforSell(qnty.value, item.quantity)
+                        "
+                        (click)="
+                          modal.close();
+                          onclickSell(
+                            item.ticker,
+                            qnty.value,
+                            item.currprice,
+                            item.quantity
+                          )
+                        "
+                      >
+                        Sell
+                      </button>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+            <!--end of card-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer-container" class="text-center text-muted footer-copyright">
+    Powered by Tiingo. Developed by Keerthana S K
+  </div>
+</div>

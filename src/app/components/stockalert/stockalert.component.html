@@ -1,0 +1,16 @@
+<div
+  class="row"
+  *ngFor="let alert of Myalerts"
+  ng-app="myApp"
+  ng-controller="alertcontroller"
+>
+  <div class="col">
+    <ngb-alert
+      [type]="alert.type"
+      (close)="removealert(alert)"
+      class="text-center"
+    >
+      {{ alert.message }}
+    </ngb-alert>
+  </div>
+</div>

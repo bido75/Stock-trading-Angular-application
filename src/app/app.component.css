@@ -1,0 +1,24 @@
+body {
+  font-family: sans-serif;
+  height: 100%;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
+}
+
+.bg-company-custom {
+  background-color: rgb(100, 77, 247);
+}
+
+.active {
+  border: 2px solid white;
+  border-radius: 10px;
+}
+
+.custom-toggler.navbar-toggler:active,
+.navbar-toggler:focus {
+  border: none !important;
+  box-shadow: none !important;
+  outline: rgb(255, 102, 203) auto 1px !important;
+  /* outline-color: rgb(255, 102, 203); */
+}
