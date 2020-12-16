@@ -8,6 +8,7 @@ o	Techstack: AJAX, JSON, HTML5, CSS3, Bootstrap (navbars, alerts, modals, cards,
 TiingoAPI,NewsAPI,Angular Routing,Angular Material tabs, material spinner and material autocomplete,ng-bootstrap,angular modal,angular highcharts,Typescript,
 Twitter and Facebook share content icon API, HTML5 Local Storage,Highcharts angular module, GCP ***
 
+Link to web app - https://hw8-stock-search.wl.r.appspot.com/
 
 # MyApp - Stock Search
 
